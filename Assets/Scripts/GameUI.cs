@@ -85,20 +85,8 @@ public class GameUI : MonoBehaviour
         lose.SetActive(!isWin);  // Show the lose UI element if the player lost.
     }
 
-    public void SwitchLevel()
+    public void GoToMainMenu()
     {
-        string currentScene = SceneManager.GetActiveScene().name;
-        Debug.Log("Current Scene: " + currentScene); // Log the current scene
-
-
-            // Check which scene is currently active and load the appropriate one
-            if (currentScene == "Level2")
-            {
-                SceneManager.LoadScene("SampleScene");
-            }
-            else if (currentScene == "SampleScene")
-            {
-                SceneManager.LoadScene("level2");
-            }
+        SceneManager.LoadScene("MainMenu");
     }
 }
