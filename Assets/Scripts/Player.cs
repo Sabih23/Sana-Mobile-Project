@@ -13,7 +13,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if (isLaunched && rb.IsSleeping())
+        if (isLaunched && (rb.IsSleeping() || rb.velocity.magnitude < 0.1f || transform.position.x > 200))
         {
 
             GameManager.instance.PlayerFinished();
