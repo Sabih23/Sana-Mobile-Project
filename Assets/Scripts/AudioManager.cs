@@ -35,14 +35,17 @@ public class AudioManager : MonoBehaviour
 
     public void Play(string name)
     {
+        Debug.Log("Requesting to play sound: " + name);
         Sound s = Array.Find(sounds, sound => sound.name == name);
+
         if (s != null)
         {
+            Debug.Log("Playing sound: " + s.name);  // Log when the sound is actually played
             s.source.Play();
         }
         else
         {
             Debug.LogWarning("Sound not found: " + name);
         }
-}
+    }
 }

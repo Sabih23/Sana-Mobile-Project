@@ -16,15 +16,10 @@ public class Enemy : MonoBehaviour
         // Check if the collision's impact was strong (magnitude > 2) and if the player has been launched.
         if (collision.relativeVelocity.magnitude > 1 && PlayerLauncher.Instance.player.isLaunched)
         {
+            AudioManager.instance.Play("EnemyDeath");
             // If the conditions are met, call the GameManager to destroy this enemy object.
             GameManager.instance.DestroyEnemy(this);
         }
-    }
-        // This function is called when the GameObject is destroyed
-    void OnDestroy()
-    {
-        Debug.Log(gameObject.name + " has been destroyed!");
-        AudioManager.instance.Play("EnemyDeath");
     }
 
 }

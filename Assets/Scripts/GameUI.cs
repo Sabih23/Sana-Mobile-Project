@@ -57,4 +57,23 @@ public class GameUI : MonoBehaviour
     {
         AudioManager.instance.Play("Click");
     }
+
+    public void LoadNextLevel()
+    {
+        // Get the current scene index
+        int currentSceneIndex = SceneManager.GetActiveScene().buildIndex; 
+        
+        int nextSceneIndex = currentSceneIndex + 1;
+        
+        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+            
+            LevelManager.instance.UnlockNextLevel();
+        }
+        else
+        {
+            Debug.Log("No more levels to load.");
+        }
+    }
 }
