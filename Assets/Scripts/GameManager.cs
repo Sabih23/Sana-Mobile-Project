@@ -32,8 +32,10 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            GameUI.instance.LunchEndedScreen(enemies.Count == 0);
-            if(enemies.Count == 0)
+            bool isWin = enemies.Count == 0;
+            GameUI.instance.LunchEndedScreen(isWin);
+            
+            if (isWin)
             {
                 LevelManager.instance.UnlockNextLevel();
             }

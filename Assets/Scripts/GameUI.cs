@@ -69,7 +69,7 @@ public class GameUI : MonoBehaviour
         {
             SceneManager.LoadScene(nextSceneIndex);
             
-            LevelManager.instance.UnlockNextLevel();
+            // LevelManager.instance.UnlockNextLevel();
         }
         else
         {
