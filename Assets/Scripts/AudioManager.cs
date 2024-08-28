@@ -11,7 +11,12 @@ public class AudioManager : MonoBehaviour
     public static AudioManager instance;
     void Awake()
     {
-        instance = this;
+        if (instance == null)
+        {
+            instance = this;
+        }
+
+        DontDestroyOnLoad(gameObject);
 
         foreach(Sound s in sounds)
         {
@@ -19,6 +24,7 @@ public class AudioManager : MonoBehaviour
             s.source.clip = s.clip;
             s.source.volume = s.volume;
             s.source.pitch = s.pitch;
+            s.source.playOnAwake = false;
         }
     }
 

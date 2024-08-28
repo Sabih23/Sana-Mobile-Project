@@ -52,4 +52,9 @@ public class GameUI : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
+
+    public void PlayClickSound()
+    {
+        AudioManager.instance.Play("Click");
+    }
 }
