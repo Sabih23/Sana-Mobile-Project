@@ -33,6 +33,10 @@ public class GameManager : MonoBehaviour
         else
         {
             GameUI.instance.LunchEndedScreen(enemies.Count == 0);
+            if(enemies.Count == 0)
+            {
+                LevelManager.instance.UnlockNextLevel();
+            }
         }
     }
     public void SpawnerNewPlayer()

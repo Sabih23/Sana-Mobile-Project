@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    // This script handles what happens when an object (likely an enemy) collides with something in a 2D game.
+    [SerializeField] private AudioSource popSound;
 
+    // This script handles what happens when an object (likely an enemy) collides with something in a 2D game.
     public void OnCollisionEnter2D(Collision2D collision)
     {
         // Check if the player exists in the game.
@@ -19,4 +20,11 @@ public class Enemy : MonoBehaviour
             GameManager.instance.DestroyEnemy(this);
         }
     }
+        // This function is called when the GameObject is destroyed
+    void OnDestroy()
+    {
+        Debug.Log(gameObject.name + " has been destroyed!");
+        popSound.Play();
     }
+
+}
