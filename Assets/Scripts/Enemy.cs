@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    [SerializeField] private AudioSource popSound;
+    // [SerializeField] private AudioSource popSound;
 
     // This script handles what happens when an object (likely an enemy) collides with something in a 2D game.
     public void OnCollisionEnter2D(Collision2D collision)
@@ -24,7 +24,7 @@ public class Enemy : MonoBehaviour
     void OnDestroy()
     {
         Debug.Log(gameObject.name + " has been destroyed!");
-        popSound.Play();
+        AudioManager.instance.Play("EnemyDeath");
     }
 
 }
