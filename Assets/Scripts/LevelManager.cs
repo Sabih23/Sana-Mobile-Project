@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 
 public class LevelManager : MonoBehaviour
@@ -42,10 +43,12 @@ public class LevelManager : MonoBehaviour
     {
         // Get the current unlocked level
         int currentUnlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
+        int currentLevel = SceneManager.GetActiveScene().buildIndex  - 2;
+
         Debug.Log("UnlockNextLevel called. Current unlocked level: " + currentUnlockedLevel);
 
         // Unlock the next level if there are more levels to unlock
-        if (currentUnlockedLevel < 5) 
+        if (currentLevel == currentUnlockedLevel && currentUnlockedLevel < 5) 
         {
             PlayerPrefs.SetInt("UnlockedLevel", currentUnlockedLevel + 1);
             PlayerPrefs.Save(); 
