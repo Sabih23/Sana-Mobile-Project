@@ -43,9 +43,10 @@ public class LevelManager : MonoBehaviour
     {
         // Get the current unlocked level
         int currentUnlockedLevel = PlayerPrefs.GetInt("UnlockedLevel", 1);
-        int currentLevel = SceneManager.GetActiveScene().buildIndex  - 2;
+        int currentLevel = SceneManager.GetActiveScene().buildIndex  - 1;
 
         Debug.Log("UnlockNextLevel called. Current unlocked level: " + currentUnlockedLevel);
+        Debug.Log("CurrentLevelScene: " + currentLevel);
 
         // Unlock the next level if there are more levels to unlock
         if (currentLevel == currentUnlockedLevel && currentUnlockedLevel < 5) 

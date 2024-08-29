@@ -76,4 +76,9 @@ public class GameUI : MonoBehaviour
             Debug.Log("No more levels to load.");
         }
     }
+
+    // public void DisplayStars()
+    // {
+    //     int star = GameManager.instance.GetStars();
+    // }
 }
