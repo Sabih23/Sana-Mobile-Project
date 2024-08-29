@@ -1,12 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class GameManager : MonoBehaviour
 {
     public List<GameObject> availablePlayer = new List<GameObject>();
     // A list to hold the available player GameObjects that can be spawned in the game.
     public List<Enemy> enemies = new List<Enemy>();
+    private int stars;
 
 
     public static GameManager instance;
@@ -20,6 +23,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        stars = 4;
+        Debug.Log("Stars: " + stars);
+
         SpawnerNewPlayer();
         // Call the method to spawn a new player at the start of the game.
     }
@@ -38,6 +44,7 @@ public class GameManager : MonoBehaviour
             if (isWin)
             {
                 LevelManager.instance.UnlockNextLevel();
+                StarManager.instance.SaveStarCount(stars);
             }
         }
     }
@@ -46,6 +53,8 @@ public class GameManager : MonoBehaviour
         // Method to spawn a new player
         // Use the PlayerLauncher Singleton instance to set a new player, taking the first player from the list
         PlayerLauncher.Instance.SetNewPlayer(availablePlayer[0]);
+        stars -= 1;
+        Debug.Log("Stars: " + stars + $" {SceneManager.GetActiveScene().name}");
 
         // Remove the spawned player from the list of available players
         availablePlayer.RemoveAt(0);

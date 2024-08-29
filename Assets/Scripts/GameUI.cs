@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameUI : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class GameUI : MonoBehaviour
     public GameObject win;         // Reference to the UI element that indicates a win.
     public GameObject lose;        // Reference to the UI element that indicates a loss.
     public GameObject options;
+    public GameObject starPanel;
+    public Sprite filledStarSprite;
 
     public static GameUI instance; // Singleton instance of the GameUi, allowing it to be accessed from other scripts.
 
@@ -46,6 +49,11 @@ public class GameUI : MonoBehaviour
 
         win.SetActive(isWin);    // Show the win UI element if the player won.
         lose.SetActive(!isWin);  // Show the lose UI element if the player lost.
+        if (isWin)
+        {
+            // Ensure starPanel is activated before trying to access it
+            Invoke("LevelStars", 0.1f); // Call LevelStars after a short delay
+        }
     }
 
     public void GoToMainMenu()
@@ -77,8 +85,26 @@ public class GameUI : MonoBehaviour
         }
     }
 
-    // public void DisplayStars()
-    // {
-    //     int star = GameManager.instance.GetStars();
-    // }
+    public void LevelStars()
+    {
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex - 1;
+        string starKey = "Level" + currentLevelIndex + "_Stars";
+        int starCount = PlayerPrefs.GetInt(starKey, 0);
+        Debug.Log("Current Level stars: " + starCount + " Current Level: " + currentLevelIndex);
+
+
+      if (starPanel == null)
+        {
+            Debug.LogError("starPanel is not assigned.");
+            return;
+        }
+
+        Image[] stars = starPanel.GetComponentsInChildren<Image>();
+        Debug.Log(stars.Length);
+
+        for(int j = 0; j < starCount; j++)
+        {
+            stars[j].sprite = filledStarSprite;
+        }
+    }
 }
