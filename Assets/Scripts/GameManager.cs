@@ -45,6 +45,9 @@ public class GameManager : MonoBehaviour
             {
                 LevelManager.instance.UnlockNextLevel();
                 StarManager.instance.SaveStarCount(stars);
+                GameUI.instance.DisplayCurrentStars(stars);
+                GameUI.instance.DisplayCurrentCurrency(stars);
+                CoinSystem.instance.AddCurrencyToCollection(stars);
             }
         }
     }
