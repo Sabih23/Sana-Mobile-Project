@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public List<GameObject> availablePlayer = new List<GameObject>();
     // A list to hold the available player GameObjects that can be spawned in the game.
     public List<Enemy> enemies = new List<Enemy>();
+    public Sprite[] skins;
     private int stars;
 
 
@@ -26,6 +27,7 @@ public class GameManager : MonoBehaviour
         stars = 4;
         Debug.Log("Stars: " + stars);
 
+        UpdateSkin();
         SpawnerNewPlayer();
         // Call the method to spawn a new player at the start of the game.
     }
@@ -73,4 +75,15 @@ public class GameManager : MonoBehaviour
         Destroy(enemy.gameObject);
     }
 
+    void UpdateSkin()
+    {
+        int currentSkin = PlayerPrefs.GetInt("CurrentSkin");
+        Debug.Log("GameManger, current skin: " + currentSkin);
+
+
+            for(int i = 0; i < availablePlayer.Count; i++)
+            {
+                availablePlayer[i].GetComponent<SpriteRenderer>().sprite = skins[currentSkin];
+            }
+    }
 }

@@ -44,4 +44,9 @@ public class MainMenu : MonoBehaviour
     {
         AudioManager.instance.Play("Click");
     }
+
+    public void OnshopClick()
+    {
+        SceneManager.LoadScene("Shop");
+    }
 }

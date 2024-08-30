@@ -477,6 +477,10 @@ MonoBehaviour:
   - {fileID: 1390768890}
   - {fileID: 609247747}
   - {fileID: 1629602723}
+  skins:
+  - {fileID: 21300000, guid: 37c0280c731d4fe4db5a306e5488fd48, type: 3}
+  - {fileID: 21300000, guid: 3c4fa17635c234b499913ca0c3394f65, type: 3}
+  - {fileID: 21300000, guid: e640cc36b3130414cad9ed5805274282, type: 3}
 --- !u!114 &402278323
 MonoBehaviour:
   m_ObjectHideFlags: 0
