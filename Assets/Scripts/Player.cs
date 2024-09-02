@@ -42,7 +42,7 @@ public class Player : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         //Checks if the ball touches the ground and is in slow speed or it touches the ground behind the obstacles
-        if ((collision.gameObject.CompareTag("ground") && rb.velocity.magnitude < 0.5f) || collision.gameObject.CompareTag("ground") && transform.position.x > 100)
+        if ((collision.gameObject.CompareTag("ground") && rb.velocity.magnitude < 0.05f) || (collision.gameObject.CompareTag("ground") && transform.position.x > 100) || (collision.gameObject.CompareTag("ground") && transform.position.x < 7))
         {
             // Handle collision with an object tagged as "Obstacle"
             Debug.Log("Collided with an obstacle!");
