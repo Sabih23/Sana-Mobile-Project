@@ -495,6 +495,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStartPosition: {fileID: 1431574601}
   player: {fileID: 225274352}
+  dotPrefab: {fileID: 7842068775493001973, guid: c4bce4b2ddbaf2c4f810b16953c006cd, type: 3}
+  numberOfDots: 20
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0

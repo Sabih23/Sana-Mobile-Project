@@ -6,8 +6,12 @@ public class PlayerLauncher : MonoBehaviour
     [SerializeField]
     private Transform playerStartPosition; // Reference to the starting position of the player object
     public Player player; // Reference to the player object (assuming 'Player' is a custom class)
+    private Vector3 launchDirection;
     private bool holdingPlayer; // Boolean flag to check if the player is currently being held
     private Camera cam; // Reference to the main camera
+    public GameObject dotPrefab; //for creating trajectory
+    private List<GameObject> dots = new List<GameObject>();  // pool of dots
+    public int numberOfDots; //no. of dots in trajectory
     public static PlayerLauncher Instance; // Singleton instance for easy access to this script
 
     // Called when the script instance is being loaded
@@ -22,6 +26,12 @@ public class PlayerLauncher : MonoBehaviour
     {
         // Get and cache the main camera reference
         cam = Camera.main;
+        for(int i = 0; i < numberOfDots; i++)
+        {
+            GameObject dot = Instantiate(dotPrefab, playerStartPosition.position, Quaternion.identity);
+            dot.SetActive(false);
+            dots.Add(dot);
+        }
     }
 
     // Update is called once per frame
@@ -63,10 +73,11 @@ public class PlayerLauncher : MonoBehaviour
         if (InputUp() && holdingPlayer == true)
         {
             holdingPlayer = false; // Stop holding the player
-                                   // Launch the player in the direction opposite to the start position
-            player.Launch(playerStartPosition.position - player.transform.position);
+
+            // Launch the player in the direction opposite to the start position
+            launchDirection = playerStartPosition.position - player.transform.position;
+            player.Launch(launchDirection);
             player.isLaunched = true; // Mark the player as launched
-            
         }
 
         // If the player is being held and hasn't been launched, update the player's position
@@ -87,6 +98,15 @@ public class PlayerLauncher : MonoBehaviour
             // Set the Z-axis to 0 to keep the player in the 2D plane
             newPos.z = 0;
             player.transform.position = newPos; // Update the player's position
+
+            //Calculate launch position for trajectory
+            launchDirection = playerStartPosition.position - player.transform.position;
+            ShowTrajectory(launchDirection);
+        }
+
+        if(player.isLaunched == true)
+        {
+            HideTrajectory();
         }
     }
 
@@ -127,4 +147,29 @@ public class PlayerLauncher : MonoBehaviour
 
     }
 
+
+    private void ShowTrajectory(Vector3 launchDirection)
+    {
+        Vector3 startingPosition = player.transform.position;
+        Vector3 startingVelocity = launchDirection * 5f;
+        Vector3 gravity = (Vector3)Physics2D.gravity;
+
+        for (int i = 0; i < numberOfDots; i++)
+        {
+            float time = i * 0.1f;
+            Vector3 position = startingPosition + (startingVelocity * time) + 0.5f * gravity * time * time;
+            position.z = 0;
+
+            dots[i].SetActive(true);
+            dots[i].transform.position = position;
+        }
+    }
+
+    private void HideTrajectory()
+    {
+        foreach (GameObject dot in dots)
+        {
+            dot.SetActive(false);
+        }
+    }
 }

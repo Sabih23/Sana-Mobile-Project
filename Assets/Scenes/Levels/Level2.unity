@@ -1745,6 +1745,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playerStartPosition: {fileID: 1460984705}
   player: {fileID: 1985274852}
+  dotPrefab: {fileID: 7842068775493001973, guid: c4bce4b2ddbaf2c4f810b16953c006cd, type: 3}
+  numberOfDots: 20
 --- !u!4 &2052396078
 Transform:
   m_ObjectHideFlags: 0
