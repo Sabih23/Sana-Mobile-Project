@@ -2,9 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class MainMenu : MonoBehaviour
 {
+    public Text username;
+
+    void Start()
+    {
+        username.text = PlayerPrefs.GetString("Username");
+    }
     public void SelectLevel(int level)
     {
         switch(level)
