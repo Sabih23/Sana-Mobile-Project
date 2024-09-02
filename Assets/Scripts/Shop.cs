@@ -156,4 +156,9 @@ public class Shop : MonoBehaviour
         }
         PlayerPrefs.Save();
     }
+
+    public void PlayClickSound()
+    {
+        AudioManager.instance.Play("Click");
+    }
 }
