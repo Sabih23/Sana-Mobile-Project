@@ -52,8 +52,9 @@ public class Shop : MonoBehaviour
 
         if (totalCoins >= skinPrice && PlayerPrefs.GetInt(skinKey) == 0)
         {
-            PlayerPrefs.SetInt("TotalCurrency", totalCoins - skinPrice);
-            PlayerPrefs.SetInt(skinKey, 1); 
+            // PlayerPrefs.SetInt("TotalCurrency", totalCoins - skinPrice);    
+            PlayerPrefs.SetInt(skinKey, 1);
+            CoinSystem.instance.SubtractCoins(skinPrice); 
             clickedSkin.isUnlocked = true;
 
             DisplaySkins();

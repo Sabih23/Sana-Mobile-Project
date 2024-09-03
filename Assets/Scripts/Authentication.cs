@@ -14,6 +14,12 @@ public class Authentication : MonoBehaviour
     public InputField username, email, password, emailLogin, passwordLogin;
     string encryptedPassword;
     public Text message, messageLogin;
+    public static Authentication instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     public void OpenSignupTab()
     {
@@ -47,6 +53,7 @@ public class Authentication : MonoBehaviour
         Debug.Log("Account Created Successfully!");
         message.text = "Logged in Successfully!";
         StoreCredentials(username.text);
+        GetCurrency();
         LoadMainMenu();
     }
 
@@ -95,6 +102,7 @@ public class Authentication : MonoBehaviour
         string username = result.AccountInfo.Username;
         Debug.Log("Username: " + username);
         StoreCredentials(username);
+        GetCurrency();
         LoadMainMenu();
     }
 
@@ -106,5 +114,18 @@ public class Authentication : MonoBehaviour
     void StoreCredentials(string username)
     {
         PlayerPrefs.SetString("Username", username);
+    }
+
+    public void GetCurrency()
+    {
+        PlayFabClientAPI.GetUserInventory(new GetUserInventoryRequest(), OnGetUserInventorySuccess, OnError);
+    }
+
+    public void OnGetUserInventorySuccess(GetUserInventoryResult result)
+    {
+        int coins = result.VirtualCurrency["CN"];
+
+        Debug.Log(coins);
+        CoinSystem.instance.SetTotalCoins(coins);
     }
 }
