@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using PlayFab;
+using PlayFab.ClientModels;
 
 
 public class MainMenu : MonoBehaviour
@@ -56,5 +58,12 @@ public class MainMenu : MonoBehaviour
     public void OnshopClick()
     {
         SceneManager.LoadScene("Shop");
+    }
+
+    public void LogOut()
+    {     
+        PlayFabClientAPI.ForgetAllCredentials();
+        Debug.Log("User has been logged out and credentials forgotten.");
+        SceneManager.LoadScene("Authentication");
     }
 }

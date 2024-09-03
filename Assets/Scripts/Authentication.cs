@@ -13,17 +13,22 @@ public class Authentication : MonoBehaviour
     [SerializeField] GameObject loginTab, signupTab;
     public InputField username, email, password, emailLogin, passwordLogin;
     string encryptedPassword;
+    public Text message, messageLogin;
 
     public void OpenSignupTab()
     {
         signupTab.SetActive(true);
         loginTab.SetActive(false);
+        messageLogin.text = "";
+        message.text = "";
     }
 
     public void OpenLoginTab()
     {
         signupTab.SetActive(false);
         loginTab.SetActive(true);
+        messageLogin.text = "";
+        message.text = "";
     }
 
     public void SignUp()
@@ -40,6 +45,7 @@ public class Authentication : MonoBehaviour
     void OnRegisterSuccess(RegisterPlayFabUserResult result)
     {
         Debug.Log("Account Created Successfully!");
+        message.text = "Logged in Successfully!";
         StoreCredentials(username.text);
         LoadMainMenu();
     }
@@ -47,6 +53,14 @@ public class Authentication : MonoBehaviour
     void OnError(PlayFabError error)
     {
         Debug.LogError(error.GenerateErrorReport());
+        if(message != null)
+        {
+            message.text = error.ErrorMessage;
+        }
+        if(messageLogin != null)
+        {
+            messageLogin.text = error.ErrorMessage;
+        }
     }
 
 
@@ -63,6 +77,7 @@ public class Authentication : MonoBehaviour
     void OnLoginSuccess(LoginResult result)
     {
         Debug.Log("Logged in Successfully!");
+        messageLogin.text = "Logged in Successfully!";
         GetUserProfile(result.PlayFabId);
     }
 
