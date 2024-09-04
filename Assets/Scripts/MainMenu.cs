@@ -55,9 +55,15 @@ public class MainMenu : MonoBehaviour
         AudioManager.instance.Play("Click");
     }
 
+    // public void OnshopClick()
+    // {
+    //     SceneManager.LoadScene("Shop");
+    // }
+
+    //For Testing purposes
     public void OnshopClick()
     {
-        SceneManager.LoadScene("Shop");
+        SceneManager.LoadScene("TestStore");
     }
 
     public void LogOut()
