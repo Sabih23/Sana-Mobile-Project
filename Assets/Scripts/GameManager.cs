@@ -77,7 +77,9 @@ public class GameManager : MonoBehaviour
 
     void UpdateSkin()
     {
-        int currentSkin = PlayerPrefs.GetInt("CurrentSkin");
+        string playerID = PlayerPrefs.GetString("PlayerID");
+        string currentPlayerSkin = "Current" + playerID + "Skin";
+        int currentSkin = PlayerPrefs.GetInt(currentPlayerSkin);
         Debug.Log("GameManger, current skin: " + currentSkin);
 
 

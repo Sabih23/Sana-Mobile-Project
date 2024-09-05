@@ -52,7 +52,7 @@ public class Authentication : MonoBehaviour
     {
         Debug.Log("Account Created Successfully!");
         message.text = "Logged in Successfully!";
-        StoreCredentials(username.text);
+        StoreCredentials(username.text, result.PlayFabId);
         GetCurrency();
         LoadMainMenu();
     }
@@ -100,8 +100,9 @@ public class Authentication : MonoBehaviour
     void OnGetAccountInfoSuccess(GetAccountInfoResult result)
     {
         string username = result.AccountInfo.Username;
+        string playerID = result.AccountInfo.PlayFabId;
         Debug.Log("Username: " + username);
-        StoreCredentials(username);
+        StoreCredentials(username, playerID);
         GetCurrency();
         LoadMainMenu();
     }
@@ -111,9 +112,10 @@ public class Authentication : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
-    void StoreCredentials(string username)
+    void StoreCredentials(string username, string ID)
     {
         PlayerPrefs.SetString("Username", username);
+        PlayerPrefs.SetString("PlayerID", ID);
     }
 
     public void GetCurrency()
