@@ -479,12 +479,12 @@ MonoBehaviour:
   - skinName: Skin1
     skinSprite: {fileID: 0}
     isUnlocked: 1
-    cost: 1000
+    cost: 0
     button: {fileID: 4998491377260221308}
     coinPanel: {fileID: 0}
     statusPanel: {fileID: 0}
     appliedPanel: {fileID: 0}
-  - skinName: skin2
+  - skinName: Skin2
     skinSprite: {fileID: 0}
     isUnlocked: 0
     cost: 1500
@@ -492,7 +492,7 @@ MonoBehaviour:
     coinPanel: {fileID: 0}
     statusPanel: {fileID: 0}
     appliedPanel: {fileID: 0}
-  - skinName: skin3
+  - skinName: Skin3
     skinSprite: {fileID: 0}
     isUnlocked: 0
     cost: 3000
@@ -1568,6 +1568,12 @@ PrefabInstance:
     - target: {fileID: 1318330225816902484, guid: b55151a6703b6b646a99fa70dd8de27a, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 3.166214
+      objectReference: {fileID: 0}
+    - target: {fileID: 2701104260963024187, guid: b55151a6703b6b646a99fa70dd8de27a, type: 3}
+      propertyPath: m_Text
+      value: '0
+
+'
       objectReference: {fileID: 0}
     - target: {fileID: 3059166184991084665, guid: b55151a6703b6b646a99fa70dd8de27a, type: 3}
       propertyPath: m_IsActive

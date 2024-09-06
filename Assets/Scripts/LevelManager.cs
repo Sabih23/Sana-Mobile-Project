@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("UnlockedLevel", 1);
         }
+        TestLevel.instance.InitializeLevels();
     }
 
     void Start()
