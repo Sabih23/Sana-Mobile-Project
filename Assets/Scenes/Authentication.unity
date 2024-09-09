@@ -504,6 +504,7 @@ GameObject:
   m_Component:
   - component: {fileID: 499710244}
   - component: {fileID: 499710245}
+  - component: {fileID: 499710246}
   m_Layer: 0
   m_Name: CONTROLS
   m_TagString: Untagged
@@ -547,6 +548,18 @@ MonoBehaviour:
   passwordLogin: {fileID: 682992540}
   message: {fileID: 29826128}
   messageLogin: {fileID: 2063681525}
+--- !u!114 &499710246
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 499710242}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 615e8341cc26fea45a45aec423e5a08e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &622312349
 GameObject:
   m_ObjectHideFlags: 0

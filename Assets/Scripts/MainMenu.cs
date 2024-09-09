@@ -40,9 +40,14 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
+    // public void OnLevelsClick()
+    // {
+    //     SceneManager.LoadScene("LevelSelect");
+    // }
+
     public void OnLevelsClick()
     {
-        SceneManager.LoadScene("LevelSelect");
+        SceneManager.LoadScene("TestLevel");
     }
 
     public void OnBackClick()

@@ -5,6 +5,7 @@ using System;
 using PlayFab;
 using PlayFab.ClientModels;
 
+[System.Serializable]
 public class Level
 {
     public int LevelID;
@@ -12,6 +13,11 @@ public class Level
     public bool isUnlocked;
 }
 
+[System.Serializable]
+    public class LevelArrayWrapper
+    {
+        public List<Level> Levels;
+    }
 public class TestLevel : MonoBehaviour
 {
     public static TestLevel instance;
@@ -29,9 +35,10 @@ public class TestLevel : MonoBehaviour
             return;
         }
     }
-    
-    public void InitializeLevels()
+
+    public void AddDefaultPlayerData()
     {
+        // Create a list of levels
         List<Level> levels = new List<Level>
         {
             new Level { LevelID = 1, stars = 0, isUnlocked = true },
@@ -41,26 +48,21 @@ public class TestLevel : MonoBehaviour
             new Level { LevelID = 5, stars = 0, isUnlocked = false }
         };
 
-        // Serialize and send each Level instance
-        foreach (var level in levels)
+        // Convert the list to JSON
+        string levelDataJson = JsonUtility.ToJson(new LevelArrayWrapper { Levels = levels });
+
+        // Store the JSON under a single key in PlayFab
+        var data = new Dictionary<string, string>
         {
-            string json = JsonUtility.ToJson(level);
-            SendPlayerProgress(level.LevelID.ToString(), json);
-        }
-    }
+            { "levelData", levelDataJson }
+        };
 
-    private void SendPlayerProgress(string levelID, string json)
-    {
-        var data = new Dictionary<string, string> { { levelID, json } };
-
-        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest { Data = data }, result =>
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
         {
-            Debug.Log($"Level {levelID} data sent successfully.");
-        }, OnError);
+            Data = data
+        },
+        result => Debug.Log("Default level data added for new user"),
+        error => Debug.LogError("Error updating user data: " + error.GenerateErrorReport()));
     }
 
-    private void OnError(PlayFabError error)
-    {
-        Debug.LogError("PlayFab error: " + error.GenerateErrorReport());
-    }
 }
