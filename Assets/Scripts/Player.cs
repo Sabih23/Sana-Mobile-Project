@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -6,6 +8,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private int leftExtreme = -15;
     public bool isLaunched =false;
+    private float destroyDelay = 3f;
 
     private void Awake()
     {
@@ -27,6 +30,7 @@ public class Player : MonoBehaviour
     {
         rb.bodyType = RigidbodyType2D.Dynamic;
         rb.AddForce(vector *5 , ForceMode2D.Impulse);
+        StartCoroutine(DestroyAfterDelay(destroyDelay));
     }
 
     //destroy player when it moves out of left side of the screen
@@ -49,6 +53,16 @@ public class Player : MonoBehaviour
             GameManager.instance.PlayerFinished();
             Destroy(gameObject);
             // Implement your collision handling logic here
+        }
+    }
+
+    private IEnumerator DestroyAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        if (isLaunched) // Ensure player is still launched before destroying
+        {
+            GameManager.instance.PlayerFinished();
+            Destroy(gameObject);
         }
     }
 }

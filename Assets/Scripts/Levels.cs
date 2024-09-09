@@ -18,9 +18,9 @@ public class Level
     {
         public List<Level> Levels;
     }
-public class TestLevel : MonoBehaviour
+public class Levels : MonoBehaviour
 {
-    public static TestLevel instance;
+    public static Levels instance;
 
 
     void Awake()

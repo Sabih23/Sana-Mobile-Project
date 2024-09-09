@@ -76,7 +76,7 @@ public class GameUI : MonoBehaviour
         
         int nextSceneIndex = currentSceneIndex + 1;
         
-        if (nextSceneIndex < SceneManager.sceneCountInBuildSettings)
+        if (nextSceneIndex < 7) //since level5 is at index 6 in buildsettings
         {
             SceneManager.LoadScene(nextSceneIndex);    
         }

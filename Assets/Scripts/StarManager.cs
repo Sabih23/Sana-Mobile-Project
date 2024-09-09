@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using PlayFab;
+using PlayFab.ClientModels;
 
 
 public class StarManager : MonoBehaviour
@@ -16,59 +18,91 @@ public class StarManager : MonoBehaviour
         {
             instance = this;
         }
+        GetStars();
     }
 
-    void Start()
+    public void SaveStarCount(int starsInput)
     {
-        // ResetStars();
-        DisplayStars();
-    }
-    public void SaveStarCount(int stars)
-    {
-        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex - 1;
-        string starKey = "Level" + currentLevelIndex + "_Stars";
-        int previousStars = PlayerPrefs.GetInt(starKey, 0);
-        
-        // Check if the current star count is higher than the previously saved one
-        if (stars > previousStars)
-        {
-            PlayerPrefs.SetInt(starKey, stars);
-            PlayerPrefs.Save();
-            Debug.Log("Stars saved for level " + currentLevelIndex + ": " + stars);
-        }
-    }
-
-
-    private void DisplayStars()
-    {
-        for (int i = 0; i < levelButtons.Length; i++)
-        {
-            Button levelButton = levelButtons[i];
-            string starKey = "Level" + (i + 1) + "_Stars";
-            int starCount = PlayerPrefs.GetInt(starKey, 0);
-            Debug.Log("Level stars: " + starCount);
-
-            Transform starPanel = levelButton.transform.Find("StarPanel");
-
-            Image[] stars = starPanel.GetComponentsInChildren<Image>();
-            Debug.Log(stars.Length);
-
-            //since stars array contain 
-            for(int j = 0; j < starCount; j++)
+        int currentLevelIndex = SceneManager.GetActiveScene().buildIndex - 1; //levels start form index 2 in build settings
+        Debug.Log("Stars Input" + starsInput);
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(),
+            result =>
             {
-                stars[j].sprite = filledStarSprite;
+                if (result.Data != null && result.Data.ContainsKey("levelData"))
+                {
+                    string levelDataJson = result.Data["levelData"].Value;
+                    LevelArrayWrapper levelData = JsonUtility.FromJson<LevelArrayWrapper>(levelDataJson);
+                    var levels = levelData.Levels;
+
+                    //since levels start form index 2 in build settings but index 0 inplayfab player data
+                    if (starsInput > levels[currentLevelIndex - 1].stars)
+                    {
+                        //since index starts from 0 in data, level1 is at index 0, level2 is at index 1..
+                        levels[currentLevelIndex - 1].stars = starsInput;
+
+                        // Save updated level data back to PlayFab
+                        string updatedLevelDataJson = JsonUtility.ToJson(levelData);
+                        var data = new Dictionary<string, string>
+                        {
+                            { "levelData", updatedLevelDataJson }
+                        };
+
+                        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest
+                        {
+                            Data = data
+                        },
+                        result => Debug.Log("Next level unlocked and data updated in PlayFab."),
+                        OnError);
+                    }
+                }
+            },
+            OnError
+        );
+    }
+
+
+    void GetStars()
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest(), OnStarsDataReceived, OnError);
+    }
+
+
+    void OnStarsDataReceived(GetUserDataResult result)
+    {
+        if (result.Data != null && result.Data.ContainsKey("levelData"))
+        {
+            // Deserialize the JSON data to LevelArrayWrapper
+            string levelDataJson = result.Data["levelData"].Value;
+            LevelArrayWrapper levelData = JsonUtility.FromJson<LevelArrayWrapper>(levelDataJson);
+            var levels = levelData.Levels;
+            
+            for (int i = 0; i < levelButtons.Length; i++)
+            {
+                Button levelButton = levelButtons[i];
+                int starCount = levels[i].stars;
+                Debug.Log("Level  stars: " + starCount);
+
+                Transform starPanel = levelButton.transform.Find("StarPanel");
+
+                Image[] stars = starPanel.GetComponentsInChildren<Image>();
+                Debug.Log(stars.Length);
+
+
+                for(int j = 0; j < starCount; j++)
+                {
+                    stars[j].sprite = filledStarSprite;
+                }
             }
         }
-    }
-
-    
-    public void ResetStars()
-    {
-        for(int i = 1; i < 6; i++)
+        else
         {
-            string starKey = "Level" + i + "_Stars";
-            PlayerPrefs.SetInt(starKey, 0);
+            Debug.LogWarning("No level data found in PlayFab.");
         }
-
     }
+
+    void OnError(PlayFabError error)
+    {
+        Debug.LogError(error.GenerateErrorReport());
+    }
+    
 }

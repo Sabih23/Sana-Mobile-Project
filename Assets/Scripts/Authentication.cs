@@ -54,7 +54,7 @@ public class Authentication : MonoBehaviour
         message.text = "Logged in Successfully!";
         StoreCredentials(username.text, result.PlayFabId);
         GetCurrency();
-        TestLevel.instance.AddDefaultPlayerData();
+        Levels.instance.AddDefaultPlayerData();
         LoadMainMenu();
     }
 
