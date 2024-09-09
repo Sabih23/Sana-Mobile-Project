@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -15,6 +17,7 @@ public class GameUI : MonoBehaviour
     public GameObject starPanel;
     public GameObject coinPanel;
     public Text currency;
+    public GameObject loadingThrobber;
     public Sprite filledStarSprite;
 
     public static GameUI instance; // Singleton instance of the GameUi, allowing it to be accessed from other scripts.
@@ -43,14 +46,24 @@ public class GameUI : MonoBehaviour
         menuPanel.SetActive(true);
     }
 
-    public void LunchEndedScreen(bool isWin)
+    public void LaunchEndedScreen(bool isWin)
     {
-        // This method is called to display the end screen when the game ends.
+        StartCoroutine(CheckThrobberAndShowEndScreen(isWin));
+    }
+
+    private IEnumerator CheckThrobberAndShowEndScreen(bool isWin)
+    {
+        while (loadingThrobber.activeSelf)
+        {
+            yield return null; // Wait for the next frame and check again
+        }
+
         menuPanel.SetActive(true); // Show the end screen UI.
         options.SetActive(false);
 
         win.SetActive(isWin);    // Show the win UI element if the player won.
         lose.SetActive(!isWin);  // Show the lose UI element if the player lost.
+
         if (isWin)
         {
             // Ensuring starPanel is activated before trying to access it
@@ -119,4 +132,20 @@ public class GameUI : MonoBehaviour
         Debug.Log("Your Current Currency is: " + currentCoins);
         currency.text = currentCoins.ToString();
     }
+    public void ShowThrobber()
+    {
+        if (loadingThrobber != null)
+        {
+            loadingThrobber.SetActive(true);
+        }
+    }
+
+    public void HideThrobber()
+    {
+        if (loadingThrobber != null)
+        {
+            loadingThrobber.SetActive(false);
+        }
+    }
+
 }

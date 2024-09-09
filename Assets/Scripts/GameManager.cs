@@ -41,12 +41,16 @@ public class GameManager : MonoBehaviour
         else
         {
             bool isWin = enemies.Count == 0;
-            GameUI.instance.LunchEndedScreen(isWin);
+
+            if (isWin == false)
+            {
+                GameUI.instance.LaunchEndedScreen(false);
+            }
+            
             
             if (isWin)
             {
-                LevelManager.instance.UnlockNextLevel();
-                StarManager.instance.SaveStarCount(stars);
+                LevelManager.instance.UpdateLevelData(stars);
                 GameUI.instance.DisplayCurrentStars(stars);
                 GameUI.instance.DisplayCurrentCurrency(stars);
                 CoinSystem.instance.AddCurrencyToCollection(stars);

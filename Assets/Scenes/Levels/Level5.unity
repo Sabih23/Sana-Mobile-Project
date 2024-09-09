@@ -1805,6 +1805,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BuildingBlock_0
       objectReference: {fileID: 0}
+    - target: {fileID: 3670829923065624482, guid: 63b64fc5875d01d489054eb5206fade6, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5923857221821374612, guid: 63b64fc5875d01d489054eb5206fade6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 13.630297
