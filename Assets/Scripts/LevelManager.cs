@@ -74,7 +74,7 @@ public class LevelManager : MonoBehaviour
                         {
                             Debug.Log("Level data updated in PlayFab.");
                             GameUI.instance.HideThrobber();
-                            GameUI.instance.LaunchEndedScreen(true); // Or adjust based on your specific needs
+                            GameUI.instance.LaunchEndedScreen(true);
                         },
                         OnError);
                     }
