@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
     private Rigidbody2D rb;
     private int leftExtreme = -15;
     public bool isLaunched =false;
-    private float destroyDelay = 3f;
+    private float destroyDelay = 5f;
 
     private void Awake()
     {

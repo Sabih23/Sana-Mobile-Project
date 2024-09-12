@@ -134,6 +134,16 @@ public class FBLogin : MonoBehaviour
     private void OnPlayfabFacebookAuthComplete(PlayFab.ClientModels.LoginResult result)
     {
         SetMessage("PlayFab Facebook Auth Complete. Session ticket: " + result.SessionTicket);
+        if (result.NewlyCreated)
+        {
+            // Perform actions for first-time account creation
+            Debug.Log("New PlayFab account created via Facebook!");
+            Levels.instance.AddDefaultPlayerData(); 
+        }
+        else
+        {
+            Debug.Log("Existing PlayFab account linked to Facebook.");
+        }
         LoadMainMenu();
     }
 
@@ -174,10 +184,8 @@ public class FBLogin : MonoBehaviour
         }
     }
 
-    // public void OnGUI()
-    // {
-    //     var style = new GUIStyle { fontSize = 40, normal = new GUIStyleState { textColor = Color.white }, alignment = TextAnchor.MiddleCenter, wordWrap = true };
-    //     var area = new Rect(0, 0, Screen.width, Screen.height);
-    //     GUI.Label(area, _message, style);
-    // }
+    public void PlayClickSound()
+    {
+        AudioManager.instance.Play("Click");
+    }
 }

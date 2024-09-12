@@ -131,4 +131,9 @@ public class Authentication : MonoBehaviour
         Debug.Log(coins);
         CoinSystem.instance.SetTotalCoins(coins);
     }
+
+    public void PlayClickSound()
+    {
+        AudioManager.instance.Play("Click");
+    }
 }
